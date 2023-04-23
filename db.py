@@ -1,9 +1,23 @@
 from pymongo import MongoClient
 from typing import List, Dict, Any
+from dotenv import load_dotenv
+
+
+load_dotenv()
+
+host = getenv('TRNSF_HOST')
+port = int(getenv('TRNSF_PORT'))
+db = getenv('TRNSF_DB')
 
 
 class Database:
-    def __init__(self, host: str, port: int, database_name: str):
+    def __init__(
+            self,
+            host: str = TRNSF_HOST,
+            port: int = TRNSF_PORT,
+            database_name: str = TRNSF_DB
+        ):
+
         self.host = host
         self.port: int = port
         self.database_name: str = database_name
@@ -68,4 +82,5 @@ class Database:
         """
         Deletes multiple documents from the specified collection based on the query
         """
-        collection
+        collection = self.connect()[collection_name]
+        collection.delete_many(query)
