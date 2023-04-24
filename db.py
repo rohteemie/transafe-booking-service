@@ -1,6 +1,8 @@
 from pymongo import MongoClient
+from typing import List, Dict, Any
 from os import getenv
 from dotenv import load_dotenv
+
 
 load_dotenv()
 
@@ -9,7 +11,7 @@ class Database:
         self.host: str = getenv('TRNSF_HOST')
         self.port: int = int(getenv('TRNSF_PORT'))
         self.database_name: str = getenv('TRNSF_DB')
-        self.client: MongoClient = MongoClient(self.host, self.port)
+        self.client: MongoClient = MongoClient(self.host, self.port, maxPoolSize=100)
 
     def connect(self) -> MongoClient:
         """
@@ -24,22 +26,51 @@ class Database:
         collection = self.connect()[collection_name]
         collection.insert_one(data)
 
-    def close(self) -> None:
+    def insert_many(self, collection_name: str, data: List[dict]) -> None:
         """
-        Closes the MongoDB client connection
+        Inserts multiple documents into the specified collection
         """
-        self.client.close()
+        collection = self.connect()[collection_name]
+        collection.insert_many(data)
 
+    def get_all(self, collection_name: str) -> List[Dict[str, Any]]:
+        """
+        Retrieves all documents from the specified collection
+        """
+        collection = self.connect()[collection_name]
+        return list(collection.find())
 
-# The code below this line is to Test the class above
-data: dict = {
-    'name': 'Rotimi Transafe',
-    'seat': 4,
-    'destination': 'Lagos'
-}
+    def get_one(self, collection_name: str, query: dict) -> Dict[str, Any]:
+        """
+        Retrieves a single document from the specified collection based on the query
+        """
+        collection = self.connect()[collection_name]
+        return collection.find_one(query)
 
-db_table: str = 'user_bookings'
+    def update_one(self, collection_name: str, query: dict, data: dict) -> None:
+        """
+        Updates a single document in the specified collection based on the query
+        """
+        collection = self.connect()[collection_name]
+        collection.update_one(query, {'$set': data}, upsert=True)
 
-database: Database = Database()
-database.insert_one(db_table, data)
-database.close()
+    def update_many(self, collection_name: str, query: dict, data: dict) -> None:
+        """
+        Updates multiple documents in the specified collection based on the query
+        """
+        collection = self.connect()[collection_name]
+        collection.update_many(query, {'$set': data})
+
+    def delete_one(self, collection_name: str, query: dict) -> None:
+        """
+        Deletes a single document from the specified collection based on the query
+        """
+        collection = self.connect()[collection_name]
+        collection.delete_one(query)
+
+    def delete_many(self, collection_name: str, query: dict) -> None:
+        """
+        Deletes multiple documents from the specified collection based on the query
+        """
+        collection = self.connect()[collection_name]
+        collection.delete_many(query)
