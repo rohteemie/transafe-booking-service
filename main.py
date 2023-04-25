@@ -5,7 +5,7 @@ from api.controllers import BookingList, BookingDetail, BookingCreate
 api_route = Api(app)
 
 api_route.add_resource(BookingList, '/bookings')
-api_route.add_resource(BookingDetail, '/bookings/<booking_id>')
+api_route.add_resource(BookingDetail, '/bookings/<_id>')
 api_route.add_resource(BookingCreate, '/bookings/new')
 
 if __name__ == '__main__':
