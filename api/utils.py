@@ -12,9 +12,3 @@ def get_customer_data(customer_id):
         return customer_data
     except (requests.exceptions.RequestException, KeyError):
         return None
-
-customer_data = get_customer_data(4)
-if customer_data:
-    print(customer_data)
-else:
-    print("Failed to retrieve customer data.")
