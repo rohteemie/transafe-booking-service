@@ -17,8 +17,8 @@ pipeline {
   stage('Deploy') {
     steps {
 		// Add your deployment steps here
-    	sh 'ssh ubuntu@techalgo.tech "mkdir -p ~/bookings"'
-    	sh 'ssh ubuntu@techalgo.tech "git clone https://github.com/rohteemie/transafe-booking-service.git"'
+    	sh 'ssh ubuntu@100.25.148.168 "mkdir -p ~/bookings"'
+    	sh 'ssh ubuntu@100.25.148.168 "git clone https://github.com/rohteemie/transafe-booking-service.git"'
     	}
 	}
   }
