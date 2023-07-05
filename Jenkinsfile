@@ -9,13 +9,6 @@ pipeline {
       }
     }
 
-    stage('Build') {
-      steps {
-        // Install dependencies and build the Python application
-        sh 'echo "Hello Jenkins!"'
-      }
-    }
-
     stage('Deploy') {
       steps {
 		// Add your deployment steps here
