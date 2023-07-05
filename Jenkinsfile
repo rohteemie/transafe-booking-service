@@ -3,7 +3,7 @@ pipeline {
 
   environment {
 	// Disable strict host key checking
-	GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no'
+	GIT_SSH_COMMAND = 'ssh -i /var/lib/jenkins/id_rsa -o StrictHostKeyChecking=no'
 	}
 
   stages {
