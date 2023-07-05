@@ -17,8 +17,8 @@ pipeline {
   stage('Deploy') {
     steps {
 		// Add your deployment steps here
-    	sh 'ssh -i ~/.ssh/id_rsa ubuntu@100.25.148.168 "mkdir -p ~/bookings"'
-    	sh 'ssh -i ~/.ssh/id_rsa ubuntu@100.25.148.168 "git clone https://github.com/rohteemie/transafe-booking-service.git"'
+    	sh 'ssh -i ~/id_rsa ubuntu@100.25.148.168 "mkdir -p ~/bookings"'
+    	sh 'ssh -i ~/id_rsa ubuntu@100.25.148.168 "git clone https://github.com/rohteemie/transafe-booking-service.git"'
     	}
 	}
   }
