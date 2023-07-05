@@ -14,7 +14,13 @@ pipeline {
 		// Add your deployment steps here
     	sh 'ssh ubuntu@techalgo.tech "mkdir -p ~/bookings"'
     	sh 'ssh ubuntu@techalgo.tech "git clone https://github.com/rohteemie/transafe-booking-service.git"'
-      }
+    }
+
+	environment {
+		// Disable strict host key checking
+		GIT_SSH_COMMAND = 'ssh -o StrictHostKeyChecking=no'
+	}
+
     }
   }
 }
